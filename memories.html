@@ -40,12 +40,11 @@
         .container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px; /* أوسع شوية */
             padding: 20px;
             z-index: 10;
         }
 
-        /* البطاقة الرئيسية */
         .card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -54,10 +53,8 @@
             padding: 30px 20px 40px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
 
-        /* العنوان */
         .title {
             text-align: center;
             margin-bottom: 30px;
@@ -79,40 +76,35 @@
             text-transform: uppercase;
         }
 
-        /* حاوية المعرض */
         .gallery-container {
             position: relative;
             width: 100%;
-            max-width: 500px;
+            max-width: 600px; /* تكبير الحاوية */
             margin: 0 auto;
         }
 
-        /* كرت الصورة */
         .image-card {
             width: 100%;
-            aspect-ratio: 1 / 1;
+            height: auto;
+            background: #0a0a0a;
             border-radius: 32px;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.6);
             box-shadow: 0 20px 40px -10px black;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .image-card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 30px 50px -12px rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .image-card img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
+            max-height: 70vh; /* تمنع الصورة تطول زيادة عن اللزوم */
+            object-fit: contain; /* الصورة كاملة بدون قص */
             display: block;
-            transition: opacity 0.3s ease;
+            background: #0a0a0a; /* خلفية سوداء حول الصورة لو في فراغات */
         }
 
-        /* أزرار التنقل */
         .nav-buttons {
             display: flex;
             justify-content: space-between;
@@ -144,11 +136,6 @@
             transform: scale(1.05);
         }
 
-        .arrow-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* عداد الصور */
         .counter {
             color: rgba(255, 255, 255, 0.5);
             font-size: 16px;
@@ -159,7 +146,6 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* زر الانتقال للصفحة الثالثة */
         .next-page-btn {
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -183,11 +169,6 @@
             transform: translateY(-2px);
         }
 
-        .next-page-btn:active {
-            transform: translateY(1px);
-        }
-
-        /* تذييل */
         .footer-note {
             text-align: center;
             margin-top: 24px;
@@ -196,16 +177,11 @@
             letter-spacing: 1px;
         }
 
-        /* رسالة عند عدم وجود صور */
-        .no-images {
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 40px;
-        }
-
-        /* تحريك بالسحب (للموبايل) */
-        .gallery-container {
-            touch-action: pan-y pinch-zoom;
+        /* تحسين للموبايل */
+        @media (max-width: 600px) {
+            .image-card img {
+                max-height: 60vh;
+            }
         }
     </style>
 </head>
@@ -219,7 +195,6 @@
                 <div class="title-sub">6 صور خاصة</div>
             </div>
 
-            <!-- المعرض -->
             <div class="gallery-container" id="galleryContainer">
                 <div class="image-card" id="imageCard">
                     <img id="galleryImage" src="" alt="ذكرى">
@@ -232,7 +207,6 @@
                 </div>
             </div>
 
-            <!-- زر الصفحة الثالثة -->
             <button class="next-page-btn" id="nextPageBtn">⟶ صفحة خاصة ⟵</button>
             <div class="footer-note">اسحبي للتنقل أو استخدمي الأسهم</div>
         </div>
@@ -240,7 +214,6 @@
 
     <script>
         (function() {
-            // مصفوفة الروابط (بنفس ترتيب الصور اللي بعتيها)
             const images = [
                 "https://i.postimg.cc/xjR9txLJ/brgame-screenshot-20260209025544.jpg",
                 "https://i.postimg.cc/KjYw9Ny8/IMG-20260130-220254-132.jpg",
@@ -259,56 +232,45 @@
             const imageCounter = document.getElementById('imageCounter');
             const galleryContainer = document.getElementById('galleryContainer');
 
-            // تحديث الصورة والعداد
             function updateGallery(index) {
                 if (totalImages === 0) return;
                 galleryImage.src = images[index];
                 imageCounter.textContent = (index + 1) + ' / ' + totalImages;
             }
 
-            // التالي
             function nextImage() {
                 if (totalImages === 0) return;
                 currentIndex = (currentIndex + 1) % totalImages;
                 updateGallery(currentIndex);
             }
 
-            // السابق
             function prevImage() {
                 if (totalImages === 0) return;
                 currentIndex = (currentIndex - 1 + totalImages) % totalImages;
                 updateGallery(currentIndex);
             }
 
-            // أحداث الأزرار
             if (prevBtn && nextBtn) {
                 prevBtn.addEventListener('click', prevImage);
                 nextBtn.addEventListener('click', nextImage);
             }
 
-            // دعم السحب (للموبايل) - بسيط
+            // السحب للموبايل
             let touchStartX = 0;
-            let touchEndX = 0;
-
-            function handleTouchStart(e) {
+            galleryContainer.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
-            }
+            }, { passive: true });
 
-            function handleTouchEnd(e) {
-                touchEndX = e.changedTouches[0].screenX;
+            galleryContainer.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].screenX;
                 if (touchEndX < touchStartX - 50) {
-                    // سحب لليسار → الصورة التالية
                     nextImage();
                 } else if (touchEndX > touchStartX + 50) {
-                    // سحب لليمين → الصورة السابقة
                     prevImage();
                 }
-            }
+            }, { passive: true });
 
-            galleryContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
-            galleryContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
-
-            // لو في أزرار لوحة المفاتيح (يمين/يسار)
+            // أزرار الكيبورد
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowRight') {
                     e.preventDefault();
@@ -319,26 +281,16 @@
                 }
             });
 
-            // تهيئة أول صورة
             if (totalImages > 0) {
                 updateGallery(0);
-            } else {
-                galleryImage.alt = "لا توجد صور";
-                imageCounter.textContent = "0 / 0";
             }
 
-            // زر الانتقال للصفحة الثالثة (لحد ما نعملها)
-            const nextPageBtn = document.getElementById('nextPageBtn');
-            if (nextPageBtn) {
-                nextPageBtn.addEventListener('click', () => {
-                    // هنفتح صفحة ثالثة (مؤقتاً تنبيه)
-                    // لما نعمل الصفحة الثالثة هنغير الرابط
-                    alert("🚧 الصفحة الثالثة لسه تحت الإنشاء بس هتكون تحفة زي أتولتي 💗");
-                    // هنا ممكن توجيهي لرابط تاني
-                    // window.location.href = "page3.html";
-                });
-            }
+            // زر الانتقال للصفحة الثالثة
+            document.getElementById('nextPageBtn').addEventListener('click', () => {
+                alert("🚧 الصفحة الثالثة تحت الإنشاء لكنها هتبقى تحفة زي أتولتي 💗");
+                // window.location.href = "page3.html";
+            });
         })();
     </script>
 </body>
-  </html>
+</html>
