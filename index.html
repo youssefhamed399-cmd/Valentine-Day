@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع أتولتي الخاص</title>
+    <!-- خطوط وأيقونات -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #fde2e2 0%, #fbc4c4 100%);
+            font-family: 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* خلفية بنقوش قلوب خفيفة */
+        body::before {
+            content: "❤️";
+            position: absolute;
+            font-size: 40px;
+            color: rgba(255, 200, 200, 0.1);
+            top: 10%;
+            left: 5%;
+            transform: rotate(15deg);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        body::after {
+            content: "🐼";
+            position: absolute;
+            font-size: 60px;
+            color: rgba(0, 0, 0, 0.02);
+            bottom: 5%;
+            right: 5%;
+            transform: rotate(-5deg);
+            animation: float 10s infinite reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* الشاشات */
+        .lock-screen, .main-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            transition: opacity 0.5s ease;
+        }
+
+        .main-content {
+            display: none; /* مخفية في البداية */
+        }
+
+        /* البطاقة الموحدة */
+        .lock-card, .content-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(255, 160, 160, 0.2);
+            text-align: center;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* أيقونة القفل */
+        .lock-card i {
+            color: #b5838d;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            text-shadow: 0 5px 10px rgba(181, 131, 141, 0.3);
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #6d4c4c;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        h1 span {
+            display: block;
+            font-size: 2.2rem;
+        }
+
+        /* حقل كلمة السر */
+        input[type="password"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.03), 0 2px 5px rgba(255, 215, 215, 0.5);
+            font-size: 1.1rem;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            color: #4a3a3a;
+            margin: 15px 0 10px;
+            outline: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        input[type="password"]:focus {
+            box-shadow: 0 0 0 4px rgba(255, 175, 175, 0.3);
+        }
+
+        /* زر الفتح */
+        button {
+            background: #ffb3b3;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 150, 150, 0.5);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            width: auto;
+            min-width: 150px;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            background: #ff9f9f;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 15px 25px rgba(255, 130, 130, 0.6);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .error {
+            color: #c44545;
+            margin-top: 15px;
+            font-size: 1rem;
+            min-height: 30px;
+        }
+
+        /* المحتوى الداخلي للصفحة الثانية */
+        .content-card i.fa-heart {
+            color: #ff7b7b;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: heartbeat 1.8s infinite ease-in-out;
+            filter: drop-shadow(0 5px 10px #ffb7b7);
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            35% { transform: scale(1); }
+            45% { transform: scale(1.1); }
+            55% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: #6d4c4c;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .content-card p {
+            font-size: 1.3rem;
+            color: #5a4a4a;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        .panda {
+            font-size: 3rem;
+            margin: 20px 0 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            color: #8b6b6b;
+        }
+
+        .panda i {
+            color: #a77b7b;
+            font-size: 2rem;
+            animation: wave 2s infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+
+        .panda i:first-of-type {
+            animation-delay: 0.2s;
+        }
+        .panda i:last-of-type {
+            animation-delay: 0.4s;
+        }
+
+        /* توقيع صغير */
+        .signature {
+            margin-top: 30px;
+            font-size: 1rem;
+            color: #b28b8b;
+        }
+
+        /* تحريك البطاقة عند الظهور */
+        .main-content .content-card {
+            animation: fadeInUp 0.7s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* منطقة المحتوى القابل للتعديل */
+        .editable-area {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            border: 2px dashed #ffb3b3;
+        }
+
+        .editable-area textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            color: #4a3a3a;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .editable-area textarea:focus {
+            outline: 2px solid #ffb3b3;
+        }
+
+        .save-btn {
+            background: #b5838d;
+            padding: 10px 20px;
+            font-size: 1rem;
+            min-width: auto;
+            margin-top: 0;
+        }
+
+        .save-btn:hover {
+            background: #9e6b75;
+        }
+
+        .shared-message {
+            font-size: 1.2rem;
+            color: #6d4c4c;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- شاشة القفل (الصفحة الأولى) -->
+        <div id="lock-screen" class="lock-screen">
+            <div class="lock-card">
+                <i class="fas fa-lock"></i>
+                <h1>موقع خاص بأتولتي 🐼</h1>
+                <input type="password" id="password" placeholder="أدخل كلمة السر" autocomplete="off">
+                <button onclick="checkPassword()">افتحي</button>
+                <p id="error-message" class="error"></p>
+                <div class="signature">🌸</div>
+            </div>
+        </div>
+
+        <!-- المحتوى الخاص (الصفحة الثانية) - هنعملها سوي -->
+        <div id="main-content" class="main-content">
+            <div class="content-card">
+                <i class="fas fa-heart"></i>
+                <h2>مساحتنا الخاصة</h2>
+                <p>هنا نكتب معًا يا أتولتي 🐼</p>
+                
+                <!-- منطقة الكتابة المشتركة -->
+                <div class="editable-area">
+                    <textarea id="shared-text" placeholder="اكتبي هنا رسالة أو كلمة أو حتى رسمة ...">أنا بحبك يا أتولتي 💕</textarea>
+                    <button class="save-btn" onclick="saveMessage()">حفظ</button>
+                </div>
+
+                <!-- الرسالة المحفوظة تظهر هنا -->
+                <div class="shared-message" id="display-message">
+                    أنا بحبك يا أتولتي 💕
+                </div>
+
+                <div class="panda">
+                    <i class="fas fa-paw"></i> 🐼❤️🐼 <i class="fas fa-paw"></i>
+                </div>
+                <p>دائمًا معًا</p>
+                <div class="signature">🥰</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const passwordInput = document.getElementById('password');
+            const errorMsg = document.getElementById('error-message');
+            const lockScreen = document.getElementById('lock-screen');
+            const mainContent = document.getElementById('main-content');
+
+            if (passwordInput.value === '908') {
+                // كلمة السر صحيحة
+                lockScreen.style.display = 'none';
+                mainContent.style.display = 'flex';
+                errorMsg.innerText = ''; // إخفاء أي رسالة خطأ سابقة
+                
+                // تحميل أي رسالة سابقة
+                loadMessage();
+            } else {
+                // كلمة سر خاطئة
+                errorMsg.innerText = '❌ كلمة السر خطأ، حاول مرة أخرى';
+                passwordInput.value = ''; // امسح الحقل
+                passwordInput.focus(); // رجع التركيز
+            }
+        }
+
+        // دالة لحفظ الرسالة
+        function saveMessage() {
+            const textarea = document.getElementById('shared-text');
+            const display = document.getElementById('display-message');
+            const message = textarea.value;
+            
+            // حفظ في localStorage
+            localStorage.setItem('sharedMessage', message);
+            
+            // عرض الرسالة
+            display.innerText = message;
+            
+            // إظهار رسالة نجاح بسيطة
+            alert('تم الحفظ! 💕');
+        }
+
+        // دالة لتحميل الرسالة
+        function loadMessage() {
+            const savedMessage = localStorage.getItem('sharedMessage');
+            if (savedMessage) {
+                document.getElementById('shared-text').value = savedMessage;
+                document.getElementById('display-message').innerText = savedMessage;
+            }
+        }
+
+        // اختياري: السماح بالضغط على Enter في حقل كلمة السر
+        document.getElementById('password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // حفظ عند الضغط على Ctrl + Enter في textarea
+        document.getElementById('shared-text').addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                saveMessage();
+            }
+        });
+    </script>
+</body>
+  </html>
