@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خاص بأتولتي 🐼</title>
+    <title>908 | أتولتي</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -14,485 +12,311 @@
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
             min-height: 100vh;
+            background: #000000;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             position: relative;
-            overflow: hidden;
         }
 
-        /* خلفية متحركة ناعمة */
-        body::before {
+        /* خلفية ناعمة جداً */
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            opacity: 0.95;
+        }
+
+        .background::before {
             content: '';
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            animation: glow 15s ease infinite;
-            top: -50%;
-            left: -50%;
-            z-index: 1;
-        }
-
-        @keyframes glow {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(5%, 5%) rotate(120deg); }
-            66% { transform: translate(-5%, 2%) rotate(240deg); }
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
         }
 
         .container {
             position: relative;
-            z-index: 10;
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             padding: 20px;
+            z-index: 10;
         }
 
-        .lock-screen {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            padding: 40px 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3),
-                        0 0 0 2px rgba(255, 255, 255, 0.5) inset;
-            text-align: center;
-            transform: translateY(0);
-            animation: float 6s ease-in-out infinite;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        /* البطاقة الرئيسية */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 40px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        /* الباندا - رايقة ومتناسقة */
+        .panda {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.5));
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* صورة الباندا */
-        .panda-container {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .panda-emoji {
-            font-size: 80px;
-            filter: drop-shadow(0 10px 15px rgba(102, 126, 234, 0.4));
-            animation: wave 3s infinite;
-            display: inline-block;
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(10deg); }
-            75% { transform: rotate(-10deg); }
-        }
-
-        /* عنوان رومانسي */
+        /* عنوان أتولتي */
         .title {
-            font-size: 42px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 2px 2px 20px rgba(102, 126, 234, 0.3);
-            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .sub-title {
-            font-size: 24px;
-            color: #764ba2;
-            margin-bottom: 30px;
+        .title-main {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 40px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .title-sub {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 16px;
             font-weight: 400;
-            opacity: 0.9;
-            position: relative;
-            display: inline-block;
-        }
-
-        .sub-title::before,
-        .sub-title::after {
-            content: '❤️';
-            font-size: 18px;
-            margin: 0 10px;
-            opacity: 0.6;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); opacity: 1; }
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         /* حقل كلمة السر */
-        .password-section {
-            margin: 30px 0;
+        .password-field {
+            margin-bottom: 24px;
         }
 
         .password-label {
             display: block;
-            font-size: 18px;
-            color: #667eea;
-            margin-bottom: 12px;
-            font-weight: 600;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .password-input-wrapper {
-            position: relative;
-            width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            padding-right: 8px;
         }
 
         .password-input {
             width: 100%;
-            padding: 18px 25px;
-            font-size: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 18px 24px;
+            font-size: 28px;
+            font-weight: 400;
             text-align: center;
-            border: 3px solid #e0e7ff;
-            border-radius: 60px;
-            background: white;
-            color: #4a5568;
-            font-weight: 600;
-            letter-spacing: 8px;
-            transition: all 0.3s ease;
-            outline: none;
-            direction: ltr;
+            color: white;
+            letter-spacing: 12px;
             font-family: 'Courier New', monospace;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+            direction: ltr;
         }
 
         .password-input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
-            transform: scale(1.02);
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            letter-spacing: 14px;
         }
 
         .password-input::placeholder {
-            letter-spacing: normal;
-            font-size: 16px;
-            color: #cbd5e0;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        /* زر الدخول */
-        .unlock-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 18px 45px;
-            font-size: 22px;
-            font-weight: 600;
-            border-radius: 60px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-            position: relative;
-            overflow: hidden;
+            color: rgba(255, 255, 255, 0.2);
             letter-spacing: 2px;
-            width: 100%;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .unlock-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .unlock-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
-        }
-
-        .unlock-btn:hover::before {
-            left: 100%;
-        }
-
-        .unlock-btn:active {
-            transform: translateY(0);
+            font-size: 16px;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         /* رسالة الخطأ */
         .error-message {
-            color: #e53e3e;
-            font-size: 16px;
-            margin-top: 15px;
-            min-height: 24px;
-            font-weight: 600;
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 12px;
+            min-height: 20px;
             opacity: 0;
-            transition: opacity 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 0.3px;
         }
 
         .error-message.show {
-            opacity: 1;
+            opacity: 0.7;
+            transform: translateY(0);
         }
-
-        /* عناصر زخرفية */
-        .floating-hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 20px;
-            opacity: 0.6;
-            animation: fall 8s linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .heart:nth-child(1) { left: 10%; animation-duration: 7s; animation-delay: 0s; }
-        .heart:nth-child(2) { left: 30%; animation-duration: 9s; animation-delay: 2s; }
-        .heart:nth-child(3) { left: 50%; animation-duration: 8s; animation-delay: 1s; }
-        .heart:nth-child(4) { left: 70%; animation-duration: 10s; animation-delay: 3s; }
-        .heart:nth-child(5) { left: 90%; animation-duration: 6s; animation-delay: 4s; }
 
         /* رسالة النجاح */
-        .success-message {
+        .success-screen {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px 50px;
-            border-radius: 80px;
-            font-size: 32px;
-            font-weight: 700;
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             z-index: 100;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            border: 4px solid white;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+
+        .success-screen.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .success-content {
             text-align: center;
-            white-space: nowrap;
+            transform: translateY(20px);
+            transition: transform 0.6s ease 0.2s;
         }
 
-        .success-message.show {
-            transform: translate(-50%, -50%) scale(1);
+        .success-screen.show .success-content {
+            transform: translateY(0);
         }
 
-        .success-message span {
-            display: block;
-            font-size: 50px;
-            margin-bottom: 10px;
+        .success-emoji {
+            font-size: 100px;
+            margin-bottom: 24px;
+            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
         }
 
-        /* تنسيق للهواتف */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .lock-screen {
-                padding: 30px 20px;
-            }
-            
-            .title {
-                font-size: 36px;
-            }
-            
-            .sub-title {
-                font-size: 20px;
-            }
-            
-            .panda-emoji {
-                font-size: 70px;
-            }
-            
-            .password-input {
-                font-size: 20px;
-                padding: 15px 20px;
-            }
+        .success-title {
+            color: white;
+            font-size: 44px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+
+        .success-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* باقي العناصر */
+        .footer-note {
+            text-align: center;
+            margin-top: 32px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        /* إزالة أي تأثيرات زايدة */
+        .no-click {
+            user-select: none;
         }
     </style>
 </head>
 <body>
-    <!-- قلوب متحررة -->
-    <div class="floating-hearts">
-        <div class="heart">❤️</div>
-        <div class="heart">💖</div>
-        <div class="heart">💝</div>
-        <div class="heart">💕</div>
-        <div class="heart">💗</div>
-    </div>
-
-    <!-- رسالة النجاح المخفية -->
-    <div class="success-message" id="successMessage">
-        <span>✨</span>
-        أهلاً بأتولتي 🐼
-        <span>✨</span>
+    <div class="background"></div>
+    
+    <!-- شاشة النجاح -->
+    <div class="success-screen" id="successScreen">
+        <div class="success-content">
+            <div class="success-emoji">🐼❤️</div>
+            <div class="success-title">أتولتي</div>
+            <div class="success-text">908</div>
+        </div>
     </div>
 
     <div class="container">
-        <div class="lock-screen">
-            <div class="panda-container">
-                <span class="panda-emoji">🐼❤️</span>
+        <div class="card">
+            <div class="panda">🐼</div>
+            
+            <div class="title">
+                <div class="title-main">أتولتي</div>
+                <div class="title-sub">خاص</div>
             </div>
-            
-            <h1 class="title">أتولتي</h1>
-            <div class="sub-title">خاص بيكي أنتِ بس</div>
-            
-            <div class="password-section">
-                <label class="password-label">كلمة السر</label>
-                <div class="password-input-wrapper">
-                    <input type="password" 
-                           class="password-input" 
-                           id="passwordInput" 
-                           placeholder="••••"
-                           maxlength="3"
-                           inputmode="numeric"
-                           pattern="\d*">
-                </div>
-                
-                <button class="unlock-btn" id="unlockBtn">
-                    افتحي لي الباب يا قلب 🗝️
-                </button>
-                
-                <div class="error-message" id="errorMessage">
-                    <span>❌</span> كلمة السر غلط يا حبيبتي
-                </div>
+
+            <div class="password-field">
+                <div class="password-label">كلمة السر</div>
+                <input type="password" 
+                       class="password-input" 
+                       id="passwordInput" 
+                       placeholder="———"
+                       maxlength="3"
+                       inputmode="numeric"
+                       autocomplete="off">
+                <div class="error-message" id="errorMessage">908</div>
+            </div>
+
+            <div class="footer-note">
+                ثلاث أرقام فقط
             </div>
         </div>
     </div>
 
     <script>
-        const correctPassword = "908";
         const passwordInput = document.getElementById('passwordInput');
-        const unlockBtn = document.getElementById('unlockBtn');
         const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
+        const successScreen = document.getElementById('successScreen');
+        
+        let timeoutId = null;
 
-        // منع إدخال غير الأرقام
+        // منع غير الأرقام
         passwordInput.addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '');
-        });
-
-        // فتح القفل
-        function unlockDoor() {
-            const enteredPassword = passwordInput.value;
             
-            if (enteredPassword === correctPassword) {
-                // نجاح
-                errorMessage.classList.remove('show');
-                successMessage.classList.add('show');
-                
-                // تشغيل تأثيرات إضافية
-                document.body.style.animation = 'none';
-                document.querySelector('.lock-screen').style.transform = 'scale(1.02)';
-                
-                // إخفاء رسالة النجاح بعد 3 ثواني وتوجيه لمحتوى الموقع
-                setTimeout(() => {
-                    successMessage.classList.remove('show');
-                    // هنا ممكن تضيفي توجيه لصفحة تانية أو محتوى تاني
-                    alert('✨ مرحباً بكي في عالم أتولتي السحري ✨');
+            // لو كتب 3 أرقام، شوف صح ولا غلط
+            if (this.value.length === 3) {
+                if (this.value === '908') {
+                    // صح - شاشة النجاح
+                    successScreen.classList.add('show');
+                    errorMessage.classList.remove('show');
                     
-                    // مثال: تغيير لون الخلفية
-                    document.body.style.background = 'linear-gradient(135deg, #764ba2, #667eea)';
-                    
-                    // إضافة رسالة ترحيب
-                    const welcomeMsg = document.createElement('div');
-                    welcomeMsg.style.position = 'fixed';
-                    welcomeMsg.style.top = '20px';
-                    welcomeMsg.style.left = '50%';
-                    welcomeMsg.style.transform = 'translateX(-50%)';
-                    welcomeMsg.style.background = 'rgba(255,255,255,0.95)';
-                    welcomeMsg.style.padding = '20px 40px';
-                    welcomeMsg.style.borderRadius = '50px';
-                    welcomeMsg.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
-                    welcomeMsg.style.fontSize = '24px';
-                    welcomeMsg.style.fontWeight = 'bold';
-                    welcomeMsg.style.color = '#764ba2';
-                    welcomeMsg.style.zIndex = '1000';
-                    welcomeMsg.style.border = '3px solid white';
-                    welcomeMsg.innerHTML = '❤️ أتولتي أحلى بنوتة ❤️';
-                    document.body.appendChild(welcomeMsg);
-                    
+                    // بعد 2 ثانية نرجع للطبيعي
                     setTimeout(() => {
-                        welcomeMsg.remove();
-                    }, 4000);
-                }, 3000);
+                        successScreen.classList.remove('show');
+                        this.value = '';
+                    }, 2000);
+                } else {
+                    // غلط - نظهر رسالة 908
+                    errorMessage.classList.add('show');
+                    
+                    // نحذف القديم لو موجود
+                    if (timeoutId) clearTimeout(timeoutId);
+                    
+                    // نخفي الرسالة بعد ثانية
+                    timeoutId = setTimeout(() => {
+                        errorMessage.classList.remove('show');
+                        timeoutId = null;
+                    }, 1000);
+                    
+                    // نفرغ الحقل
+                    setTimeout(() => {
+                        this.value = '';
+                    }, 100);
+                }
             } else {
-                // فشل
-                errorMessage.classList.add('show');
-                passwordInput.style.borderColor = '#e53e3e';
-                passwordInput.classList.add('shake');
-                
-                // تأثير اهتزاز
-                setTimeout(() => {
-                    passwordInput.classList.remove('shake');
-                }, 500);
-                
-                // تفريغ الحقل بعد خطأ
-                setTimeout(() => {
-                    passwordInput.value = '';
-                    passwordInput.style.borderColor = '#e0e7ff';
-                }, 1500);
-            }
-        }
-
-        // الضغط على زر الدخول
-        unlockBtn.addEventListener('click', unlockDoor);
-
-        // الضغط على Enter في حقل كلمة السر
-        passwordInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                unlockDoor();
+                errorMessage.classList.remove('show');
             }
         });
 
-        // تأثير كتابة تلقائي للترحيب (اختياري)
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                passwordInput.placeholder = '908';
-                passwordInput.style.animation = 'glow 2s ease';
-                setTimeout(() => {
-                    passwordInput.style.animation = '';
-                }, 2000);
-            }, 1000);
+        // منع اللصق
+        passwordInput.addEventListener('paste', (e) => {
+            e.preventDefault();
         });
-
-        // إضافة كلاس شيك للاهتزاز
-        const style = document.createElement('style');
-        style.textContent = `
-            .shake {
-                animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-            }
-            
-            @keyframes shake {
-                10%, 90% { transform: translateX(-1px); }
-                20%, 80% { transform: translateX(2px); }
-                30%, 50%, 70% { transform: translateX(-4px); }
-                40%, 60% { transform: translateX(4px); }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
-    </html>
+</html>
