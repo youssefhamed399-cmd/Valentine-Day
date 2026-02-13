@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ذكرياتنا 💗 | أتولتي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            opacity: 0.95;
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        /* البطاقة الرئيسية */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 30px 20px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+
+        /* العنوان */
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-main {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .title-sub {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* حاوية المعرض */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* كرت الصورة */
+        .image-card {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 32px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 40px -10px black;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 30px 50px -12px rgba(255, 255, 255, 0.1);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* أزرار التنقل */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+            padding: 0 10px;
+        }
+
+        .arrow-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.7);
+            width: 54px;
+            height: 54px;
+            border-radius: 54px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .arrow-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .arrow-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* عداد الصور */
+        .counter {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 16px;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 8px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* زر الانتقال للصفحة الثالثة */
+        .next-page-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+            padding: 16px 32px;
+            border-radius: 60px;
+            margin-top: 40px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+
+        .next-page-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .next-page-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* تذييل */
+        .footer-note {
+            text-align: center;
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        /* رسالة عند عدم وجود صور */
+        .no-images {
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* تحريك بالسحب (للموبايل) */
+        .gallery-container {
+            touch-action: pan-y pinch-zoom;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="title">
+                <div class="title-main">ذكرياتنا 💗</div>
+                <div class="title-sub">6 صور خاصة</div>
+            </div>
+
+            <!-- المعرض -->
+            <div class="gallery-container" id="galleryContainer">
+                <div class="image-card" id="imageCard">
+                    <img id="galleryImage" src="" alt="ذكرى">
+                </div>
+
+                <div class="nav-buttons">
+                    <div class="arrow-btn" id="prevBtn">←</div>
+                    <span class="counter" id="imageCounter">1 / 6</span>
+                    <div class="arrow-btn" id="nextBtn">→</div>
+                </div>
+            </div>
+
+            <!-- زر الصفحة الثالثة -->
+            <button class="next-page-btn" id="nextPageBtn">⟶ صفحة خاصة ⟵</button>
+            <div class="footer-note">اسحبي للتنقل أو استخدمي الأسهم</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // مصفوفة الروابط (بنفس ترتيب الصور اللي بعتيها)
+            const images = [
+                "https://i.postimg.cc/xjR9txLJ/brgame-screenshot-20260209025544.jpg",
+                "https://i.postimg.cc/KjYw9Ny8/IMG-20260130-220254-132.jpg",
+                "https://i.postimg.cc/VLd2nDRg/IMG-20260130-220252-327.jpg",
+                "https://i.postimg.cc/mrNnBqLx/IMG-20260130-214833-317.jpg",
+                "https://i.postimg.cc/DZxYbXbk/IMG-20260130-214824-372.jpg",
+                "https://i.postimg.cc/vHgScD8R/IMG-20260130-214753-268.jpg"
+            ];
+
+            let currentIndex = 0;
+            const totalImages = images.length;
+
+            const galleryImage = document.getElementById('galleryImage');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const imageCounter = document.getElementById('imageCounter');
+            const galleryContainer = document.getElementById('galleryContainer');
+
+            // تحديث الصورة والعداد
+            function updateGallery(index) {
+                if (totalImages === 0) return;
+                galleryImage.src = images[index];
+                imageCounter.textContent = (index + 1) + ' / ' + totalImages;
+            }
+
+            // التالي
+            function nextImage() {
+                if (totalImages === 0) return;
+                currentIndex = (currentIndex + 1) % totalImages;
+                updateGallery(currentIndex);
+            }
+
+            // السابق
+            function prevImage() {
+                if (totalImages === 0) return;
+                currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+                updateGallery(currentIndex);
+            }
+
+            // أحداث الأزرار
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', prevImage);
+                nextBtn.addEventListener('click', nextImage);
+            }
+
+            // دعم السحب (للموبايل) - بسيط
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            function handleTouchStart(e) {
+                touchStartX = e.changedTouches[0].screenX;
+            }
+
+            function handleTouchEnd(e) {
+                touchEndX = e.changedTouches[0].screenX;
+                if (touchEndX < touchStartX - 50) {
+                    // سحب لليسار → الصورة التالية
+                    nextImage();
+                } else if (touchEndX > touchStartX + 50) {
+                    // سحب لليمين → الصورة السابقة
+                    prevImage();
+                }
+            }
+
+            galleryContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+            galleryContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+            // لو في أزرار لوحة المفاتيح (يمين/يسار)
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    prevImage();
+                }
+            });
+
+            // تهيئة أول صورة
+            if (totalImages > 0) {
+                updateGallery(0);
+            } else {
+                galleryImage.alt = "لا توجد صور";
+                imageCounter.textContent = "0 / 0";
+            }
+
+            // زر الانتقال للصفحة الثالثة (لحد ما نعملها)
+            const nextPageBtn = document.getElementById('nextPageBtn');
+            if (nextPageBtn) {
+                nextPageBtn.addEventListener('click', () => {
+                    // هنفتح صفحة ثالثة (مؤقتاً تنبيه)
+                    // لما نعمل الصفحة الثالثة هنغير الرابط
+                    alert("🚧 الصفحة الثالثة لسه تحت الإنشاء بس هتكون تحفة زي أتولتي 💗");
+                    // هنا ممكن توجيهي لرابط تاني
+                    // window.location.href = "page3.html";
+                });
+            }
+        })();
+    </script>
+</body>
+  </html>
