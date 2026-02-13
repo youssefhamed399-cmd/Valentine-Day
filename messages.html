@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رسايلنا 💬 | أتولتي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .background {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            opacity: 0.95;
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 60%);
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            padding: 20px;
+            z-index: 10;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 48px;
+            padding: 30px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-main {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .title-sub {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* مشغل الأغنية */
+        .player-wrapper {
+            margin-bottom: 40px;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .player-wrapper iframe {
+            width: 100%;
+            height: 180px;
+            display: block;
+        }
+
+        /* نموذج إضافة رسالة */
+        .form-section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 32px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-title {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .input-field, .textarea-field {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        .input-field:focus, .textarea-field:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .textarea-field {
+            min-height: 100px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 30px;
+            margin: 20px 0;
+            align-items: center;
+        }
+
+        .radio-label {
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .radio-label input {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            padding: 16px 32px;
+            border-radius: 60px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.6);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* عرض الرسائل */
+        .messages-section {
+            margin-top: 30px;
+        }
+
+        .messages-title {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 18px;
+            transition: 0.2s;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            letter-spacing: 0.3px;
+        }
+
+        .message-author {
+            color: #a78bfa;
+            font-weight: 500;
+            background: rgba(167, 139, 250, 0.1);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+        }
+
+        .message-date {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .message-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .empty-messages {
+            color: rgba(255, 255, 255, 0.3);
+            text-align: center;
+            padding: 40px;
+            font-size: 16px;
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 32px;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+        }
+
+        /* سكرول ناعم */
+        .messages-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .messages-list::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.02);
+            border-radius: 10px;
+        }
+        .messages-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="title">
+                <div class="title-main">رسايلنا 💬</div>
+                <div class="title-sub">اكتبي لي واكتبلك</div>
+            </div>
+
+            <!-- مشغل YouTube -->
+            <div class="player-wrapper">
+                <iframe src="https://www.youtube.com/embed/z4KMUyXeXEk?start=22&autoplay=0&rel=0" 
+                        title="أغنية خاصة"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                </iframe>
+            </div>
+
+            <!-- إضافة رسالة -->
+            <div class="form-section">
+                <div class="form-title">✏️ رسالة جديدة</div>
+                <div class="input-group">
+                    <label class="input-label">الرسالة</label>
+                    <textarea class="textarea-field" id="messageText" placeholder="اكتبي أي حاجة ..."></textarea>
+                </div>
+
+                <div class="radio-group">
+                    <label class="radio-label">
+                        <input type="radio" name="author" value="أتولتي" checked> 🐼 أتولتي
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="author" value="أنت"> 💙 أنت
+                    </label>
+                </div>
+
+                <button class="submit-btn" id="saveMessageBtn">⟶ احفظ الرسالة ⟵</button>
+            </div>
+
+            <!-- عرض الرسائل -->
+            <div class="messages-section">
+                <div class="messages-title">
+                    <span>📬 الرسائل السابقة</span>
+                    <span class="clear-btn" id="clearMessagesBtn">امسحي الكل</span>
+                </div>
+                <div class="messages-list" id="messagesList"></div>
+            </div>
+
+            <div class="footer-note">كل الرسايل بتتحفظ عندكِ في المتصفح</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // مفتاح التخزين
+            const STORAGE_KEY = 'atolty_messages';
+
+            // دالة لجلب الرسائل من localStorage
+            function getMessages() {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                return stored ? JSON.parse(stored) : [];
+            }
+
+            // دالة لحفظ الرسائل
+            function saveMessages(messages) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+            }
+
+            // دالة لعرض الرسائل في الصفحة
+            function renderMessages() {
+                const messages = getMessages();
+                const container = document.getElementById('messagesList');
+                
+                if (messages.length === 0) {
+                    container.innerHTML = '<div class="empty-messages">💬 ولا رسالة... اكتبي أول رسالة 💕</div>';
+                    return;
+                }
+
+                // ترتيب من الأحدث للأقدم
+                messages.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                let html = '';
+                messages.forEach(msg => {
+                    const date = new Date(msg.date);
+                    const formattedDate = date.toLocaleDateString('ar-EG', {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    html += `
+                        <div class="message-item">
+                            <div class="message-header">
+                                <span class="message-author">${msg.author}</span>
+                                <span class="message-date">${formattedDate}</span>
+                            </div>
+                            <div class="message-text">${escapeHtml(msg.text)}</div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+
+            // دالة بسيطة لتحويل النص لمنع XSS
+            function escapeHtml(unsafe) {
+                return unsafe
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
+            // إضافة رسالة جديدة
+            function addMessage(text, author) {
+                if (!text.trim()) {
+                    alert('الرسالة فاضية .. اكتبي حاجة');
+                    return false;
+                }
+
+                const messages = getMessages();
+                const newMsg = {
+                    id: Date.now() + Math.random(),
+                    text: text.trim(),
+                    author: author,
+                    date: new Date().toISOString()
+                };
+                messages.push(newMsg);
+                saveMessages(messages);
+                renderMessages();
+                return true;
+            }
+
+            // مسح كل الرسائل
+            function clearAllMessages() {
+                if (confirm('تتأكدي من مسح كل الرسايل؟')) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    renderMessages();
+                }
+            }
+
+            // الأحداث
+            document.getElementById('saveMessageBtn').addEventListener('click', () => {
+                const text = document.getElementById('messageText').value;
+                const author = document.querySelector('input[name="author"]:checked').value;
+                
+                if (addMessage(text, author)) {
+                    document.getElementById('messageText').value = ''; // تفريغ الحقل
+                }
+            });
+
+            document.getElementById('clearMessagesBtn').addEventListener('click', clearAllMessages);
+
+            // العرض الأولي
+            renderMessages();
+        })();
+    </script>
+</body>
+              </html>
